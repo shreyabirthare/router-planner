@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
 import networkx as nx
 import pickle
 import plotly.plotly as py
@@ -10,7 +6,6 @@ from plotly.graph_objs import *
 from plotly.offline import init_notebook_mode, plot, iplot
 init_notebook_mode(connected=True)
 
-<<<<<<< HEAD
 
 map_10_dict = {
 	0: {'pos': (0.7798606835438107, 0.6922727646627362), 'connections': [7, 6, 5]}, 
@@ -69,8 +64,6 @@ map_40_dict = {
 }
 
 
-=======
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
 class Map:
 	def __init__(self, G):
 		self._graph = G
@@ -81,7 +74,6 @@ class Map:
 		with open(filename, 'wb') as f:
 			pickle.dump(self._graph, f)
 
-<<<<<<< HEAD
 def load_map_graph(map_dict):
 	G = nx.Graph()
 	for node in map_dict.keys():
@@ -97,17 +89,11 @@ def load_map_10():
 
 def load_map_40():
 	G = load_map_graph(map_40_dict)
-=======
-def load_map(name):
-	with open(name, 'rb') as f:
-		G = pickle.load(f)
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
 	return Map(G)
 
 def show_map(M, start=None, goal=None, path=None):
     G = M._graph
     pos = nx.get_node_attributes(G, 'pos')
-<<<<<<< HEAD
     abx = []
     aby = []
 
@@ -121,16 +107,10 @@ def show_map(M, start=None, goal=None, path=None):
     edge_trace = Scatter(
     x=abx,
     y=aby,
-=======
-    edge_trace = Scatter(
-    x=[],
-    y=[],
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
     line=Line(width=0.5,color='#888'),
     hoverinfo='none',
     mode='lines')
 
-<<<<<<< HEAD
     aax = []
     aay = []
 
@@ -166,18 +146,6 @@ def show_map(M, start=None, goal=None, path=None):
         x=aax,
         y=aay,
         text=ab2,
-=======
-    for edge in G.edges():
-        x0, y0 = G.node[edge[0]]['pos']
-        x1, y1 = G.node[edge[1]]['pos']
-        edge_trace['x'] += [x0, x1, None]
-        edge_trace['y'] += [y0, y1, None]
-
-    node_trace = Scatter(
-        x=[],
-        y=[],
-        text=[],
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
         mode='markers',
         hoverinfo='text',
         marker=Marker(
@@ -187,11 +155,7 @@ def show_map(M, start=None, goal=None, path=None):
             # Jet' | 'RdBu' | 'Blackbody' | 'Earth' | 'Electric' | 'YIOrRd' | 'YIGnBu'
             colorscale='Hot',
             reversescale=True,
-<<<<<<< HEAD
             color=ab1,
-=======
-            color=[],
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
             size=10,
             colorbar=dict(
                 thickness=15,
@@ -200,33 +164,11 @@ def show_map(M, start=None, goal=None, path=None):
                 titleside='right'
             ),
             line=dict(width=2)))
-<<<<<<< HEAD
 
     
 
 
     fig = Figure(data=Data([edge_trace,node_trace]),
-=======
-    for node in G.nodes():
-        x, y = G.node[node]['pos']
-        node_trace['x'].append(x)
-        node_trace['y'].append(y)
-
-    for node, adjacencies in enumerate(G.adjacency_list()):
-        color = 0
-        if path and node in path:
-            color = 2
-        if node == start:
-            color = 3
-        elif node == goal:
-            color = 1
-        # node_trace['marker']['color'].append(len(adjacencies))
-        node_trace['marker']['color'].append(color)
-        node_info = "Intersection " + str(node)
-        node_trace['text'].append(node_info)
-
-    fig = Figure(data=Data([edge_trace, node_trace]),
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
                  layout=Layout(
                     title='<br>Network graph made with Python',
                     titlefont=dict(size=16),
@@ -237,8 +179,4 @@ def show_map(M, start=None, goal=None, path=None):
                     xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
                     yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
-<<<<<<< HEAD
     iplot(fig)
-=======
-    iplot(fig)
->>>>>>> e0d9b27e8eb41682a5c06d70a37e2c1ef2776067
