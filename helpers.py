@@ -63,6 +63,18 @@ map_40_dict = {
 	39: {'pos': (0.6315322816286787, 0.7311657634689946), 'connections': [2, 4, 7, 22, 28, 36]}
 }
 
+map_15_dict = {
+	0: {'pos': (0.7798606835438107, 0.6922727646627362), 'connections': [1,5,6,7]}, 
+	1: {'pos': (0.7647837074641568, 0.3252670836724646), 'connections': [0,2,4,5]}, 
+	2: {'pos': (0.7155217893995438, 0.20026498027300055), 'connections': [1,3,4]}, 
+	3: {'pos': (0.04580558670435442, 0.5886703168399895), 'connections': [2,5,6,7,9]}, 
+	4: {'pos': (0.8325506249953353, 0.02310946309985762), 'connections': [1,2,8,9]}, 
+	5: {'pos': (0.49016747075266875, 0.5464878695400415), 'connections': [0,1,3,7]}, 
+	6: {'pos': (0.6691919587749445,0.8820353070895344), 'connections': [0,3,7]}, 
+	7: {'pos': (0.46247219371675075, 0.6258061621642713), 'connections': [0,3,5,6]}, 
+	8: {'pos': (0.11622158839385677, 0.11236327488812581), 'connections': [9,4]}, 
+	9: {'pos': (0.1285377678230034, 0.3285840695698353), 'connections': [3,4,8]}
+}
 
 class Map:
 	def __init__(self, G):
@@ -91,6 +103,10 @@ def load_map_40():
 	G = load_map_graph(map_40_dict)
 	return Map(G)
 
+def load_map_15():
+	G = load_map_graph(map_15_dict)
+	return Map(G)
+
 def show_map(M, start=None, goal=None, path=None):
     G = M._graph
     pos = nx.get_node_attributes(G, 'pos')
@@ -110,7 +126,6 @@ def show_map(M, start=None, goal=None, path=None):
     line=Line(width=0.5,color='#888'),
     hoverinfo='none',
     mode='lines')
-
     aax = []
     aay = []
 
@@ -137,7 +152,7 @@ def show_map(M, start=None, goal=None, path=None):
         #ab1.append(len(adjacencies))
         #node_trace['marker']['color'].append(color)
         ab1.append(color)
-        node_info = "Intersection " + str(node)
+        node_info = str(node)+" ("+str(G.node[edge[0]]['pos'][0])[:4]+","+str(G.node[edge[0]]['pos'][1])[:]+")"
         #node_trace['text'].append(node_info)
         ab2.append(node_info)
 
@@ -146,7 +161,7 @@ def show_map(M, start=None, goal=None, path=None):
         x=aax,
         y=aay,
         text=ab2,
-        mode='markers',
+        mode='markers+text',
         hoverinfo='text',
         marker=Marker(
             showscale=False,
@@ -156,27 +171,27 @@ def show_map(M, start=None, goal=None, path=None):
             colorscale='Hot',
             reversescale=True,
             color=ab1,
-            size=10,
+            size=5,#size of node
             colorbar=dict(
                 thickness=15,
                 title='Node Connections',
                 xanchor='left',
                 titleside='right'
             ),
-            line=dict(width=2)))
+            line=dict(width=1)))
 
     
 
 
-    fig = Figure(data=Data([edge_trace,node_trace]),
+    fig = Figure(data=Data([edge_trace, node_trace]),
                  layout=Layout(
                     title='<br>Network graph made with Python',
                     titlefont=dict(size=16),
-                    showlegend=False,
+                    showlegend=True,
                     hovermode='closest',
-                    margin=dict(b=20,l=5,r=5,t=40),
+                    margin=dict(b=50,l=20,r=20,t=50),
                    
-                    xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
-                    yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
+                    xaxis=XAxis(showgrid=True, zeroline=True, showticklabels=True),
+                    yaxis=YAxis(showgrid=True, zeroline=True, showticklabels=True)))
 
     iplot(fig)
